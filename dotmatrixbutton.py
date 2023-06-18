@@ -22,11 +22,10 @@ GPIO.setmode(GPIO.BOARD)
 greenButton = 29
 GPIO.setup(greenButton, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 buttonPresses = 0
-counter_running = False  # Initialize counter_running variable
+
 # Define button callback functions
 def button_green_callback(channel):
-    global buttonPresses, counter_running
-    
+    global buttonPresses    
     today = day_and_time() # Get today's date.
     today = '{:%A, %Y-%m-%d}'.format(today) + ' (' + '{:%H:%M:%S}'.format(today) + ')' # Make the format nicer.
     if buttonPresses % 3 == 0:
@@ -50,11 +49,9 @@ def drawTime():
     with canvas(device) as draw:
         text(draw, (0, 1), '{:%H:%M}'.format(today), fill="white", font=proportional(CP437_FONT))
 def counter_up():
-    global counter_running
     start_time = datetime.datetime.now()
     toggle = False
-    counter_running = True  # Start the counter
-    while counter_running:
+    while True:
         toggle = not toggle
         current_time = datetime.datetime.now()
         elapsed_time = current_time - start_time
